@@ -39,7 +39,7 @@ As for the data-pipeline, the scope consists of:
 ** **
 
 ## 4. Solution Concept
-
+<img src="https://i.ibb.co/ZgxqjyD/Blank-diagram.png">
 
 ## 5. Acceptance criteria
 
