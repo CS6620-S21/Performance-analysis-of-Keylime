@@ -36,7 +36,7 @@ As for the data-pipeline, the scope consists of:
 
 ### Remote Attestation Workflow in Keylime
 
-<img src="https://i.ibb.co/ZgxqjyD/Blank-diagram.png">
+![Remote attestation workflow for Keylime](./imgs/Keylime_Remote_Attestation_Workflow.png)
 The diagram above shows Keylime's remote attestation workflow. It starts with the whitelist.txt (what we expect the remote node to be). And then, the verifier generates a nonce to deal with the replay attacks. After that, TPM is going to execute the "Quote" operation with the given nonce and it's own private AIK. After receiving the signature, the verifier will get this agent's public key from the registrar. Finally, the verifier will decrypt the signed message using the public key and compare the current state with the whitelist.
 
 ### Existing Visualization Webapp
