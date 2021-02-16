@@ -42,6 +42,7 @@ The diagram above shows Keylime's remote attestation workflow. It starts with th
 ### Existing Visualization Webapp
 
 ![alt text](./imgs/Keylime_Visualization.png 'Existing visualization architecture')
+
 This diagram describles the existing visualization architecture from a high-level perspective. To get the state for a certain agent, the web app runs a query in verifier DB and return the details of such agent back to the front-end. To get all agents' states, it firstly finds a list of agents from the registrar DB. And then, it gets the details of every agent one by one from verifier DB. The data collection might not be very efficient since it requires multiple reads from the DB. As for a cluster with 200 nodes, it's going to run 200 queries in verifier DB. This might be part of the reason why it doesn't scale well.
 
 ## 5. Acceptance criteria
