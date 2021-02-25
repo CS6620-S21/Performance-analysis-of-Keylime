@@ -16,7 +16,9 @@ As for stretch goals, we expect our project can do the following as well:
 
 ## 2. Users/Personas Of The Project:
 
-This project utilizes/extends keylime to provide integrity monitoring to a cluster of nodes(with TPM chip installed) scattered around clouds. The visualization of performance analysis can be used by any end-users who wants to monitor their clouds. Amongst many scenarios, it well suited to tenants who need to remotely attest machines not under their own full control (such as a consumer of hybrid cloud or a remote Edge / IoT device in an insecure physical tamper prone location.)
+This project utilizes/extends keylime to provide integrity monitoring(Measured Boot, IMA Runtime Attestation and Encrypted Payload Execution) to a cluster of nodes(with TPM chip installed) scattered around clouds. 
+
+The visualization of performance analysis can be used by end-users(generally considered as customers who run their IaaS cloud machines from cloud provider) who wants to continuously monitor those nodes and make sure they have not been compromised without the needing to trust cloud providers. Amongst many scenarios, it well suited to tenants who need to remotely attest machines not under their own full control (such as a consumer of hybrid cloud or a remote Edge / IoT device in an insecure physical tamper prone location.)
 
 ## 3. Scope and Features Of The Project:
 
