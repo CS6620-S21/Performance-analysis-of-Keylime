@@ -31,6 +31,9 @@ wget https://github.com/stefanberger/swtpm/archive/v0.5.2.tar.gz
 tar -zxvf v0.5.2.tar.gz
 cd swtpm-0.5.2/
 apt-get -y install  libfuse-dev libglib2.0-dev libgmp-dev expect libtasn1-dev socat tpm-tools python3-twisted gnutls-dev gnutls-bin net-tools softhsm2 libseccomp-dev
+./autogen.sh --with-openssl
+make dist
+dpkg-buildpackage -us -uc -j4
 cd ..
 dpkg -i swtpm-dev_0.5.2_amd64.deb swtpm-libs_0.5.2_amd64.deb swtpm-tools_0.5.2_amd64.deb swtpm_0.5.2_amd64.deb
 
