@@ -92,17 +92,29 @@ Stretch goals:
 
 ## 6. Release Planning:
 
-Detailed group plan and coverage can be found on the Trello board: to be created
-
-- Release #1(due by Week 7):  
-   Build a visualization front-end prototype for data profiling  
-   Back-end implementation supporting a relative small number of nodes.  
+- Sprint #1(By Feb. 28, 2021):  
+   Install keylime packages & configure local environment.
+   Run keylime services.
    ...
 
-- Release #2(due by Week 9):  
-  Front-end implementation supporting a relative small number of nodes.  
+- Sprint #2(By Mar. 12, 2021): 
+   Set up MOC cluster for keylime services.
+   Do integration test manually.
    ...
 
-- Release #3(due by Week 13):  
-  Scale-up to support a relatively large number of nodes.  
+- Sprint #3(By Mar. 26, 2021):  
+   Using **Ansible** automate dependency installation & uninstallation, configuration.
+   Test keylime with 108 agents.
+   Analyze the performance bottleneck in keylime webapp (visualization) workflow.
    ...
+
+- Release #1:  
+   In the first [Pull Request](https://github.com/keylime/keylime/pull/601), some config variable are added to control the throughput between webapp and verifier so that the webapp won't overload other services.
+
+- Sprint #4(By Apr. 9, 2021):  
+   Half the number of API calls for visualization.
+   Implement a prototype with **2 visualization graphs**: a classic pie-chart (Google Chart) and an interactive sunburst chart (D3.js). Considering the usability at a large scale, the **pie-chart** is preferred over sunburst chart by the keylime team.
+
+- Release #2:  
+   In the second [Pull Request](https://github.com/keylime/keylime/pull/635), duplicated API calls are removed.  
+   In the thrid [Pull Request](https://github.com/keylime/keylime/pull/637), the new GUI is under review.
