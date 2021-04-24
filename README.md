@@ -22,17 +22,22 @@ The visualization of performance analysis can be used by end-users(generally con
 
 ## 3. Scope and Features Of The Project:
 
+The performance analysis part:
+
+- Analyzing the performance of existing Keylime web app
+- Finding the bottleneck of it
+- Improving the performance and support larger number of nodes
+
 The scope of the visualization methodology includes the following parts:
 
-- Being able to visualize the time series data in real-time.
+- Being able to visualize the collected data in real-time.
 - A prototype of the large scale visualization, which lets the user tell what’s going on in the remote cluster without too much effort.
 - A web front-end project that implements all of the functionalities in the prototype.
 
 As for the data-pipeline, the scope consists of:
 
-- Collecting meaningful data (e.g. via DB queries)
-- Processing data efficiently
-- A service that periodically send the collected and processed data to the front-end
+- Collecting meaningful data (e.g. via API calls)
+- Processing data efficiently 
 
 ## 4. Solution Concept
 
@@ -46,6 +51,10 @@ The diagram above shows Keylime's remote attestation workflow. It starts with th
 ![alt text](./imgs/Keylime_Visualization.png 'Existing visualization architecture')
 
 This diagram describles the existing visualization architecture from a high-level perspective. To get the state for a certain agent, the web app runs a query in verifier DB and return the details of such agent back to the front-end. To get all agents' states, it firstly finds a list of agents from the registrar DB. And then, it gets the details of every agent one by one from verifier DB. The data collection might not be very efficient since it requires multiple reads from the DB. As for a cluster with 200 nodes, it's going to run 200 queries in verifier DB. This might be part of the reason why it doesn't scale well.
+
+### Ansible Auto-Deployment
+
+Our project uses Ansible to automate deployment on MOC. There are 4 playbooks to seperately manage agents, verifier, registrar and webapp. Instructions on how we use Ansible can be found here. 
 
 ## 5. Acceptance criteria
 
