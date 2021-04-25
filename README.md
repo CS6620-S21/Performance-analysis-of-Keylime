@@ -54,7 +54,7 @@ This diagram describles the existing visualization architecture from a high-leve
 
 ### Ansible Auto-Deployment
 
-Our project uses Ansible to automate deployment on MOC. There are 4 playbooks to seperately manage agents, verifier, registrar and webapp. Instructions on how we use Ansible can be found here. 
+Our project uses Ansible to automate deployment on MOC. There are 4 playbooks to seperately manage agents, verifier, registrar and webapp. Instructions on how we use Ansible can be found [here](https://github.com/FengqiQiao/keylime_ansible). 
 
 ## 5. Acceptance criteria
 
