@@ -53,7 +53,7 @@ The diagram above shows Keylime's remote attestation workflow. It starts with th
 
 ![alt text](./imgs/keylime_visualization_webapp.png 'Existing visualization architecture')
 
-This diagram describles the existing visualization architecture from a high-level perspective. To get the latest states of all agents, keylime webapp firstly finds a list of registered agents from registrar DB. And then, it gets the details of every agent asynchronously from verifier DB. Although seems like it's possible to retrieve all of records from verifier directly, we must retrieve a list of registered agents before getting the details from verifier since some registered agents might not exist in verifier DB yet (some registered agents are in registrar DB but not in verifier DB). Further discussion can be found in this [issue](https://github.com/keylime/keylime/issues/628).
+This diagram describles the visualization architecture from a high-level perspective. To get the latest states of all agents, keylime webapp firstly finds a list of registered agents from registrar DB. And then, it gets the details of every agent asynchronously from verifier DB. Although seems like it's possible to retrieve all of records from verifier directly, we must retrieve a list of registered agents first since some registered agents might not exist in verifier DB yet (some registered agents are in registrar DB but not in verifier DB). Further discussion can be found in this [issue](https://github.com/keylime/keylime/issues/628).
 
 ### Visualization webapp Performance Analysis
 
