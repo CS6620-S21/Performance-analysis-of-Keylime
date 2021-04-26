@@ -43,9 +43,40 @@ The diagram above shows Keylime's remote attestation workflow. It starts with th
 
 ### Existing Visualization Webapp
 
-![alt text](./imgs/Keylime_Visualization.png 'Existing visualization architecture')
+![alt text](./imgs/keylime_visualization_webapp.png 'Existing visualization architecture')
 
-This diagram describles the existing visualization architecture from a high-level perspective. To get the state for a certain agent, the web app runs a query in verifier DB and return the details of such agent back to the front-end. To get all agents' states, it firstly finds a list of agents from the registrar DB. And then, it gets the details of every agent one by one from verifier DB. The data collection might not be very efficient since it requires multiple reads from the DB. As for a cluster with 200 nodes, it's going to run 200 queries in verifier DB. This might be part of the reason why it doesn't scale well.
+This diagram describles the existing visualization architecture from a high-level perspective. To get the latest states of all agents, keylime webapp firstly finds a list of registered agents from registrar DB. And then, it gets the details of every agent asynchronously from verifier DB. Although seems like it's possible to retrieve all of records from verifier directly, we must retrieve a list of registered agents before getting the details from verifier since some registered agents might not exist in verifier DB yet (some registered agents are in registrar DB but not in verifier DB). Further discussion can be found in this [issue](https://github.com/keylime/keylime/issues/628).
+
+### Visualization webapp Performance Analysis
+
+The following command-line tools are used to monitor the web app:
+- htop: CPU & RAM usage
+- nload: total bandwidth
+- nethogs: bandwidth per process
+- lftop: bandwidth per network interface
+- Browser's dev tool: overall latency
+
+When running keylime without webapp GUI, all performance metrics are fine. However after the GUI starts, verifier constantly use 70% CPU time of 6 vCPUs (out of 8 vCPUs). The maximum latency is greater than 60s. It's clear that running webapp GUI is an **I/O bounding** task to keylime services. Specifically, verifier becomes the bottleneck because it has to process a large amount of requests from webapp and retrieve data from DB frequently. In conclusion, keylime backend services are overloaded by the visualization webapp.
+
+![Performance without webapp](./imgs/perf_without_webapp.png)
+![Performance with webapp](./imgs/perf_27_agents_webapp.png)
+
+Thus, we tested the webapp with 27, 61, 108 agents and multiple update frequencies. When the throughput (1 agent = 1 request, throughput = # of agents / update interval ) is around **5 requests/sec**, CPU and RAM usage is quite moderate. When the throughput is around **21 requests/sec**, the averge latency can be larger than 60 seconds. Meanwhile, the verifier uses over 70% CPU time of 7 out 8 vCPUs. The **maximum throughput** that verifier can handle with 8 vCPUs and 16GB RAM is **12~13 requests/sec**. Sending requests to verifier at this rate won't make a significant negative impact on the performance.
+
+### Duplicated backend API calls
+
+Technically speaking, each agent_id should be checked one time per interval, but keylime webapp is sending a duplicated API call to verifier for each agent. As a result, if there are n registered agents in the system, 2 * n (to verifier) + 1 (to registrar) API calls will be made instead of n + 1. Further description on this issue can be found [here](https://github.com/keylime/keylime/issues/634). Our [PR](https://github.com/keylime/keylime/pull/635) is under review by the team.
+
+### New Visualization GUI
+
+The current webapp GUI is not very attractive to users because it simply shows all agents in a list. When there are more than 20 agents, it becomes very hard to go through all of them. Moreover, it's lack of a high-level summary of the system. Thus, we propose a new GUI design, which consists of a pie-chart to give users an overview of the system. If a section (state category) is selected, agents of such state will be list on the right in a paginated manner.
+
+Besides UI changes, we also break requests into smaller batches so that each interval only one batch will be sent to the verifier. In this way, we can make sure that the traffic between webapp and verifier won't exceed the max throughput. Ultimately, webapp won't lower the performance of other keylime services.
+
+Finally, to make keylime webapp easier to maintain and more attractive to other developers, some outdated JS code is replaced by modern API or syntax. Further description on the new GUI can be found [here](https://github.com/keylime/keylime/issues/636). Our [PR](https://github.com/keylime/keylime/pull/637) is under review by the team. Based on the comments, we will try to get it merged by the middle of this week (April 28th 2021).
+
+![webapp_new_GUI_get_quote](./imgs/webapp_get_quote.png)
+![webapp_new_GUI_failed](./imgs/webapp_failed.png)
 
 ## 5. Acceptance criteria
 
@@ -61,17 +92,29 @@ Stretch goals:
 
 ## 6. Release Planning:
 
-Detailed group plan and coverage can be found on the Trello board: to be created
-
-- Release #1(due by Week 7):  
-   Build a visualization front-end prototype for data profiling  
-   Back-end implementation supporting a relative small number of nodes.  
+- Sprint #1(By Feb. 28, 2021):  
+   Install keylime packages & configure local environment.
+   Run keylime services.
    ...
 
-- Release #2(due by Week 9):  
-  Front-end implementation supporting a relative small number of nodes.  
+- Sprint #2(By Mar. 12, 2021): 
+   Set up MOC cluster for keylime services.
+   Do integration test manually.
    ...
 
-- Release #3(due by Week 13):  
-  Scale-up to support a relatively large number of nodes.  
+- Sprint #3(By Mar. 26, 2021):  
+   Using **Ansible** automate dependency installation & uninstallation, configuration.
+   Test keylime with 108 agents.
+   Analyze the performance bottleneck in keylime webapp (visualization) workflow.
    ...
+
+- Release #1:  
+   In the first [Pull Request](https://github.com/keylime/keylime/pull/601), some config variable are added to control the throughput between webapp and verifier so that the webapp won't overload other services.
+
+- Sprint #4(By Apr. 9, 2021):  
+   Half the number of API calls for visualization.
+   Implement a prototype with **2 visualization graphs**: a classic pie-chart (Google Chart) and an interactive sunburst chart (D3.js). Considering the usability at a large scale, the **pie-chart** is preferred over sunburst chart by the keylime team.
+
+- Release #2:  
+   In the second [Pull Request](https://github.com/keylime/keylime/pull/635), duplicated API calls are removed.  
+   In the thrid [Pull Request](https://github.com/keylime/keylime/pull/637), the new GUI is under review.
