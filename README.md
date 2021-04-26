@@ -98,18 +98,15 @@ Stretch goals:
 - Sprint #1(By Feb. 28, 2021):  
    Install keylime packages & configure local environment.
    Run keylime services.
-   ...
 
 - Sprint #2(By Mar. 12, 2021): 
    Set up MOC cluster for keylime services.
    Do integration test manually.
-   ...
 
 - Sprint #3(By Mar. 26, 2021):  
    Using **Ansible** automate dependency installation & uninstallation, configuration.
    Test keylime with 108 agents.
    Analyze the performance bottleneck in keylime webapp (visualization) workflow.
-   ...
 
 - Release #1:  
    In the first [Pull Request](https://github.com/keylime/keylime/pull/601), some config variable are added to control the throughput between webapp and verifier so that the webapp won't overload other services.
