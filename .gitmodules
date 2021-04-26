@@ -1,0 +1,3 @@
+[submodule "keylime_ansible"]
+	path = keylime_ansible
+	url = https://github.com/FengqiQiao/keylime_ansible.git
