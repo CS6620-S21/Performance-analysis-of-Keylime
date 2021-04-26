@@ -25,17 +25,22 @@ The new webapp front-end UI targets cloud administrators and researchers who wan
 
 ## 3. Scope and Features Of The Project:
 
+The performance analysis part:
+
+- Analyzing the performance of existing Keylime web app
+- Finding the bottleneck of it
+- Improving the performance and support larger number of nodes
+
 The scope of the visualization methodology includes the following parts:
 
-- Being able to visualize the time series data in real-time.
+- Being able to visualize the collected data in real-time.
 - A prototype of the large scale visualization, which lets the user tell what’s going on in the remote cluster without too much effort.
 - A web front-end project that implements all of the functionalities in the prototype.
 
 As for the data-pipeline, the scope consists of:
 
-- Collecting meaningful data (e.g. via DB queries)
-- Processing data efficiently
-- A service that periodically send the collected and processed data to the front-end
+- Collecting meaningful data (e.g. via API calls)
+- Processing data efficiently 
 
 ## 4. Solution Concept
 
@@ -80,6 +85,10 @@ Finally, to make keylime webapp easier to maintain and more attractive to other 
 
 ![webapp_new_GUI_get_quote](./imgs/webapp_get_quote.png)
 ![webapp_new_GUI_failed](./imgs/webapp_failed.png)
+
+### Ansible Auto-Deployment
+
+Our project uses Ansible to automate deployment on MOC. There are 4 playbooks to seperately manage agents, verifier, registrar and webapp. Instructions on how we use Ansible can be found [here](https://github.com/FengqiQiao/keylime_ansible). 
 
 ## 5. Acceptance criteria
 
