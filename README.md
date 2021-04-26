@@ -69,7 +69,7 @@ When running keylime without webapp GUI, all performance metrics are fine. Howev
 ![Performance without webapp](./imgs/perf_without_webapp.png)
 ![Performance with webapp](./imgs/perf_27_agents_webapp.png)
 
-Thus, we tested the webapp with 27, 61, 108 agents and multiple update frequencies. When the throughput (1 agent = 1 request, throughput = # of agents / update interval ) is around **5 requests/sec**, CPU and RAM usage is quite moderate. When the throughput is around **21 requests/sec**, the averge latency can be larger than 60 seconds. Meanwhile, the verifier uses over 70% CPU time of 7 out 8 vCPUs. The **maximum throughput** that verifier can handle with 8 vCPUs and 16GB RAM is **12~13 requests/sec**. Sending requests to verifier at this rate won't make a significant negative impact on the performance.
+Thus, we tested the webapp with 27, 61, 108 agents and multiple update frequencies. When the throughput (1 agent = 1 request, throughput = # of agents / update interval ) is around **5 requests/sec**, CPU and RAM usage is quite moderate. When the throughput is around **21 requests/sec**, the averge latency can be larger than 60 seconds. Meanwhile, the verifier uses over 70% CPU time of 7 out 8 vCPUs. The **maximum throughput** that verifier can handle with 8 vCPUs and 16GB RAM is **12~13 requests/sec**. Sending requests to verifier at a higher rate will lead to timeout issues.
 
 ### Duplicated backend API calls
 
